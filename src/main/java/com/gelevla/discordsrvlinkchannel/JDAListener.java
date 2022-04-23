@@ -6,8 +6,6 @@ import github.scarsz.discordsrv.dependencies.jda.api.events.guild.GuildUnavailab
 import github.scarsz.discordsrv.dependencies.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import github.scarsz.discordsrv.dependencies.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-
-
 import java.util.concurrent.TimeUnit;
 
 public class JDAListener extends ListenerAdapter {
@@ -25,8 +23,7 @@ public class JDAListener extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         //If the message was sent in the discord linking channel
-        String LinkingChannel = plugin.getConfig().getString("LinkingDiscordChannel");
-        if (event.getChannel().getId() == LinkingChannel) {
+        if (event.getChannel().getId().equals(plugin.getConfig().getString("LinkingDiscordChannel"))) {
             //don't process messages sent by ANY bot
             if (!event.getAuthor().isBot()) {
                 DiscordSRV.api.callEvent(new DiscordGuildMessageReceivedEvent(event));

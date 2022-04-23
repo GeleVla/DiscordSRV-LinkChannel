@@ -1,6 +1,10 @@
-name: DiscordSRV LinkChannel
+name: DiscordSRV-LinkChannel
 version: '${project.version}'
 main: com.gelevla.discordsrvlinkchannel.DiscordSRVLinkChannel
 api-version: 1.18
 authors: [ GeleVla ]
 description: A DiscordSRV addon allowing linking via a Discord channel.
+commands:
+  lcreload:
+    description: Reloads the config file.
+    usage: /<command>
