@@ -1,5 +1,6 @@
 package com.gelevla.discordsrvlinkchannel;
 
+import com.tchristofferson.configupdater.ConfigUpdater;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,6 +12,8 @@ import github.scarsz.discordsrv.DiscordSRV;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
 public final class DiscordSRVLinkChannel extends JavaPlugin implements Listener {
 
@@ -22,8 +25,16 @@ public final class DiscordSRVLinkChannel extends JavaPlugin implements Listener 
         getLogger().info("DiscordSRV-LinkChannel addon has been enabled!");
         getServer().getPluginManager().registerEvents(this, this);
 
-        this.saveDefaultConfig();
-        new File(this.getDataFolder(), "config.yml");
+        saveDefaultConfig();
+        File configFile = new File(getDataFolder(), "config.yml");
+
+        try {
+            ConfigUpdater.update(this, "config.yml", configFile, Arrays.asList("RemoveMessages"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        reloadConfig();
 
         int pluginId = 15021; // <-- Replace with the id of your plugin!
         Metrics metrics = new Metrics(this, pluginId);
@@ -35,11 +46,10 @@ public final class DiscordSRVLinkChannel extends JavaPlugin implements Listener 
 
         if (command.getName().equalsIgnoreCase("lcreload")){
             if (sender instanceof ConsoleCommandSender){
-                this.reloadConfig();
+                reloadConfig();
                 getLogger().info("The config has been reloaded!");
             }
-            if (sender instanceof Player){
-                Player p = (Player) sender;
+            if (sender instanceof Player p){
                 p.sendMessage(ChatColor.RED + "This command can only be send from console.");
             }
         }

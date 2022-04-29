@@ -1,2 +1,3 @@
 # DiscordSRV LinkChannel settings
 LinkingDiscordChannel: "000000000000000000"
+RemoveMessages: true

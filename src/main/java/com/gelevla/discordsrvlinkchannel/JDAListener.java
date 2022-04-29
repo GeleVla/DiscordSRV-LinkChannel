@@ -31,7 +31,9 @@ public class JDAListener extends ListenerAdapter {
                 String reply = DiscordSRV.getPlugin().getAccountLinkManager().process(event.getMessage().getContentRaw(), event.getAuthor().getId());
                 if (reply != null) event.getChannel().sendMessage(reply).queue();
             }
-            event.getChannel().deleteMessageById(event.getMessage().getId()).queueAfter(10, TimeUnit.SECONDS);
+            if (plugin.getConfig().getBoolean("RemoveMessages")){
+                event.getChannel().deleteMessageById(event.getMessage().getId()).queueAfter(10, TimeUnit.SECONDS);
+            }
         }
     }
 }
